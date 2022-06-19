@@ -6,6 +6,9 @@ namespace Game.AI.Minimax.Algorithm
 {
     public class MinimaxAlgorithm<T> where T : IMinimaxEvaluate, new ()
     {
+        private const int MIN = -1000;
+        private const int MAX = 1000;
+        
         private int m_PlayerValue;
         private int m_OpponentValue;
         private IMinimaxEvaluate evaluator;
@@ -29,7 +32,7 @@ namespace Game.AI.Minimax.Algorithm
                     if (board[i][j] == 0)
                     {
                         board[i][j] = m_PlayerValue;
-                        int moveVal = Minimax(board, 0, false);
+                        int moveVal = Minimax(board, 0, false, MIN, MAX);
                         board[i][j] = 0;
 
                         if (moveVal > bestVal)
@@ -59,7 +62,7 @@ namespace Game.AI.Minimax.Algorithm
             return false;
         }
 
-        public int Minimax(Board board, int depth, bool isMax)
+        public int Minimax(Board board, int depth, bool isMax, int alpha, int beta)
         {
             int score = evaluator.Evaluate(board, m_PlayerValue);
             if (score != 0)
@@ -68,7 +71,7 @@ namespace Game.AI.Minimax.Algorithm
             if (!IsMovesLeft(board))
                 return 0;
 
-            int best = isMax ? -1000 : 1000;
+            int best = isMax ? MIN : MAX;
             int judgeValue = isMax ? m_PlayerValue : m_OpponentValue;
             Func<int, int, int> minMaxFunc;
             if (isMax)
@@ -83,7 +86,25 @@ namespace Game.AI.Minimax.Algorithm
                     if (board[i][j] == 0)
                     {
                         board[i][j] = judgeValue;
-                        best = minMaxFunc(best, Minimax(board, depth + 1, !isMax));
+                        best = minMaxFunc(best, Minimax(board, depth + 1, !isMax, alpha, beta));
+                        if (isMax)
+                        {
+                            alpha = Math.Max(alpha, best);
+                            if (beta <= alpha)
+                            {
+                                board[i][j] = 0;
+                                return beta;
+                            }
+                        }
+                        else
+                        {
+                            beta = Math.Min(beta, best);
+                            if (beta <= alpha)
+                            {
+                                board[i][j] = 0;
+                                return alpha;
+                            }
+                        }
                         board[i][j] = 0;
                     }
                 }

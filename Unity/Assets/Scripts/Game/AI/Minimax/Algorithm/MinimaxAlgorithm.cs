@@ -8,6 +8,8 @@ namespace Game.AI.Minimax.Algorithm
     {
         private const int MIN = -1000;
         private const int MAX = 1000;
+
+        private int m_MaxDepth;
         
         private int m_PlayerValue;
         private int m_OpponentValue;
@@ -17,12 +19,13 @@ namespace Game.AI.Minimax.Algorithm
         {
             m_PlayerValue = playerValue;
             m_OpponentValue = opponentValue;
+            m_MaxDepth = Define.BOARD_SIZE <= 3 ? Define.BOARD_SIZE * 2 : Define.BOARD_SIZE;
             evaluator = new T();
         }
 
         public Move FindBestMove(Board board)
         {
-            int bestVal = -1000;
+            int bestVal = MIN;
             Move bestMove = new Move(-1, -1);
 
             for (int i = 0; i < Define.BOARD_SIZE; i++)
@@ -71,6 +74,9 @@ namespace Game.AI.Minimax.Algorithm
             if (!IsMovesLeft(board))
                 return 0;
 
+            if (depth == m_MaxDepth)
+                return 0;
+
             int best = isMax ? MIN : MAX;
             int judgeValue = isMax ? m_PlayerValue : m_OpponentValue;
             Func<int, int, int> minMaxFunc;
@@ -110,7 +116,7 @@ namespace Game.AI.Minimax.Algorithm
                 }
             }
 
-            return best;
+            return isMax ? alpha : beta;
         }
     }
 }

@@ -31,9 +31,9 @@ namespace Game.Battle.BattleState
 
 		private IEnumerator DoRobotCalc()
 		{
-			Move nextMove = BattleManager.Instance.GetBattle().sceneObjectManager.ticTacToeAi.CalcNextMove();
 			yield return new WaitForSeconds(2);
-
+			
+			Move nextMove = BattleManager.Instance.GetBattle().sceneObjectManager.ticTacToeAi.CalcNextMove();
 			Chess chess = BattleManager.Instance.GetBattle().sceneObjectManager.GetChess(nextMove.row, nextMove.col);
 			chess?.SetChessState();
 		}

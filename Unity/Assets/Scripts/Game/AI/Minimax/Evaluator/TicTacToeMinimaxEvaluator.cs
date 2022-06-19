@@ -6,7 +6,7 @@ namespace Game.AI.Minimax
 {
 	public class TicTacToeMinimaxEvaluator : IMinimaxEvaluate
 	{
-		public int Evaluate(Board board)
+		public int Evaluate(Board board, int playerValue)
 		{
 			int win = Math.Abs(Define.POSITIVE * Define.BOARD_SIZE);
 			for (int i = 0; i < Define.BOARD_SIZE; i++)
@@ -18,10 +18,11 @@ namespace Game.AI.Minimax
 					judgeRow += board[i][j];
 					judgeCol += board[j][i];
 				}
+
 				if (Math.Abs(judgeRow) == win)
-					return judgeRow;
+					return judgeRow / Define.BOARD_SIZE == playerValue ? 10 : -10;
 				if (Math.Abs(judgeCol) == win)
-					return judgeCol;
+					return judgeCol / Define.BOARD_SIZE == playerValue ? 10 : -10;
 			}
 
 			int judgeDiagonalP = 0;
@@ -32,9 +33,9 @@ namespace Game.AI.Minimax
 				judgeDiagonalN += board[i][Define.BOARD_SIZE - i - 1];
 			}
 			if (Math.Abs(judgeDiagonalP) == win)
-				return judgeDiagonalP;
+				return judgeDiagonalP / Define.BOARD_SIZE == playerValue ? 10 : -10;
 			if (Math.Abs(judgeDiagonalN) == win)
-				return judgeDiagonalN;
+				return judgeDiagonalN / Define.BOARD_SIZE == playerValue ? 10 : -10;
 
 			return 0;
 		}

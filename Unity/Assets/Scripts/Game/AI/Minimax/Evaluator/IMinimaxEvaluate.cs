@@ -7,6 +7,6 @@ namespace Game.AI.Minimax
 		/// <summary>
 		/// 赢局判定
 		/// </summary>
-		int Evaluate(Board board);
+		int Evaluate(Board board, int playerValue);
 	}
 }

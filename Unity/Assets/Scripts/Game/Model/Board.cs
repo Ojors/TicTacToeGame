@@ -47,6 +47,10 @@ namespace Game.Model
 			for (int i = 0; i < Define.BOARD_SIZE; i++)
 			{
 				m_Data[i] = new int[Define.BOARD_SIZE];
+				for (int j = 0; j < Define.BOARD_SIZE; j++)
+				{
+					m_Data[i][j] = 0;
+				}
 			}
 
 			m_EmptyMove.Clear();

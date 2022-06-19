@@ -26,7 +26,7 @@ namespace Game.AI
 				case Level.Easy:
 					return RandomMove(ModelManager.Instance.board);
 				case Level.Normal:
-					int r = UnityEngine.Random.Range(0, 1);
+					int r = UnityEngine.Random.Range(0, 2);
 					return r > 0 ? m_Minimax.FindBestMove(ModelManager.Instance.board) : RandomMove(ModelManager.Instance.board);
 				case Level.Hard:
 					return m_Minimax.FindBestMove(ModelManager.Instance.board);

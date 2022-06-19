@@ -61,7 +61,7 @@ namespace Game.AI.Minimax.Algorithm
 
         public int Minimax(Board board, int depth, bool isMax)
         {
-            int score = evaluator.Evaluate(board);
+            int score = evaluator.Evaluate(board, m_PlayerValue);
             if (score != 0)
                 return score;
 
@@ -87,8 +87,6 @@ namespace Game.AI.Minimax.Algorithm
                         board[i][j] = 0;
                     }
                 }
-
-                return best;
             }
 
             return best;

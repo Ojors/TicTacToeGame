@@ -125,7 +125,7 @@ namespace Game.Battle
 
 		public bool IsBattleEnd(out int evaluateResult)
 		{
-			evaluateResult = minimaxEvaluator.Evaluate(ModelManager.Instance.board);
+			evaluateResult = minimaxEvaluator.Evaluate(ModelManager.Instance.board, Define.POSITIVE);
 			int emptyMoveCount = ModelManager.Instance.board.GetEmptyMoves().Count;
 			return evaluateResult != 0 || emptyMoveCount <= 0;
 		}
